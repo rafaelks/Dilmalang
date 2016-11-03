@@ -12,8 +12,9 @@
  - porque: if
  - casoContrario: else
  - politico: var
- - estocarVento: array // Contribution by @otondin
- - figuraOculta: delete // Contribution by @otondin
+ - estocarVento: array // by @otondin
+ - figuraOculta: delete // by @otondin
+ - midiaGolpista: console.log // by @otondin
  - propina: número
  - laranja: string
  - corrupto: true
