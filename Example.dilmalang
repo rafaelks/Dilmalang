@@ -12,6 +12,7 @@
  - porque: if
  - casoContrario: else
  - politico: var
+ - caixaDois: object
  - estocarVento: array // by @otondin
  - figuraOculta: delete // by @otondin
  - midiaGolpista: console.log // by @otondin
