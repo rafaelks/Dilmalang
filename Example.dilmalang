@@ -1,0 +1,57 @@
+/**
+ Dilmalang
+
+ Authors: Rafael K. Streit (@rafaelks) & Rodrigo K. Nascimento (@rodrigok).
+ Date: 03/11/2016.
+
+ This is the dictionary similar to JavaScript:
+ - ministerio: class
+ - cc: this
+ - secretaria: function
+ - dobrarAMeta: **2
+ - porque: if
+ - casoContrario: else
+ - politico: var
+ - propina: número
+ - laranja: string
+ - corrupto: true
+ - honesto: false
+ - carater: boolean
+ - lavaJato: exception/catch
+ - pedalada: error
+ - delatar: return
+ - euViVoceVeja: for
+ - euJaVi: continue
+ - pareiDeVer: break
+ - meta: null
+ - jogaPraDentro: Array().append
+ */
+
+ministerio Pessoa {
+	politico laranja nome
+	politico carater corrupto
+	politico propina salario
+
+	secretaria salarioAnual() {
+		delatar cc.salario * 12
+	}
+}
+
+pessoas = []
+
+euViVoceVeja (i = 0; i < 10000; i++) {
+	pessoa = Pessoa()
+	pessoa.nome = "Político Fulano de Tal " + i
+	pessoa.carater = honesto
+	pessoa.salario = i.dobrarAMeta()
+
+	porque pessoa.salario < 100000 {
+		pessoas.jogaPraDentro(pessoa)
+
+		porque pessoa.salario > 10000000 {
+			pareiDeVer
+		}
+	} casoContrario {
+		euJaVi
+	}
+}
