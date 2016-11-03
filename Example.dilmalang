@@ -25,35 +25,40 @@
  - pareiDeVer: break
  - meta: null
  - jogaPraDentro: Array().append
+ - .,: ;
+
+ Enjoy!
+ 
  */
 
 ministerio Pessoa {
-	politico laranja nome
-	politico carater corrupto
-	politico propina salario
+	politico laranja nome.,
+	politico carater corrupto.,
+	politico propina salario.,
 
 	secretaria salarioAnual() {
-		delatar cc.salario * 12
+		delatar cc.salario * 12.,
 	}
 }
 
-pessoas = []
+pessoas = [].,
 
-//Comentário
-euViVoceVeja (i = 0; i < 10000; i++) {
-	pessoa = Pessoa()
-	pessoa.nome = "Político Fulano de Tal " + i
-	pessoa.carater = honesto
-	pessoa.salario = i.dobrarAMeta()
+// Create lots of people, but only keep the ones
+// with highest salary.
+euViVoceVeja (i = 0., i < 10000., i++) {
+	pessoa = Pessoa().,
+	pessoa.nome = "Político Fulano de Tal " + i.,
+	pessoa.carater = honesto.,
+	pessoa.salario = i.dobrarAMeta().,
 
 	//Outro comentário
 	porque pessoa.salario < 100000 {
-		pessoas.jogaPraDentro(pessoa)
+		pessoas.jogaPraDentro(pessoa).,
 
 		porque pessoa.salario > 10000000 {
-			pareiDeVer
+			pareiDeVer.,
 		}
 	} casoContrario {
-		euJaVi
+		euJaVi.,
 	}
 }
