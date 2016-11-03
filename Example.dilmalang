@@ -12,6 +12,7 @@
  - porque: if
  - casoContrario: else
  - politico: var
+ - estocarVendo: array // Contribution by @otondin
  - propina: número
  - laranja: string
  - corrupto: true
