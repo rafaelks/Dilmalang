@@ -39,12 +39,14 @@ ministerio Pessoa {
 
 pessoas = []
 
+//Comentário
 euViVoceVeja (i = 0; i < 10000; i++) {
 	pessoa = Pessoa()
 	pessoa.nome = "Político Fulano de Tal " + i
 	pessoa.carater = honesto
 	pessoa.salario = i.dobrarAMeta()
 
+	//Outro comentário
 	porque pessoa.salario < 100000 {
 		pessoas.jogaPraDentro(pessoa)
 
