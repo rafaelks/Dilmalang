@@ -13,6 +13,7 @@
  - casoContrario: else
  - politico: var
  - estocarVento: array // Contribution by @otondin
+ - figuraOculta: delete // Contribution by @otondin
  - propina: número
  - laranja: string
  - corrupto: true
