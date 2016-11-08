@@ -56,7 +56,12 @@ class LineControl {
 		this.lexer = lexer;
 	}
 
+	get index() {
+		return this.current.line;
+	}
+
 	next() {
+		this.current.line++;
 		return this.lexer.code.parsed.shift();
 	}
 
@@ -74,7 +79,12 @@ class CharControl {
 		this.lexer = lexer;
 	}
 
+	get index() {
+		return this.lexer.line.current.column;
+	}
+
 	next() {
+		this.lexer.line.current.column++;
 		this.lexer.line.current.code = this.lexer.line.current.code.substr(1);
 		return this.lexer.line.current.code[0];
 	}
@@ -182,17 +192,13 @@ class Lexer {
 		const tokenColumnSize = 40;
 		console.log('');
 		console.log(this.line.current.original);
-		console.log('+', pad('', typeColumnSize + tokenColumnSize + 3, '-'), '+');
-		console.log('|', pad('type', typeColumnSize), '|', pad('token', tokenColumnSize), '|');
-		console.log('+', pad('', typeColumnSize + tokenColumnSize + 3, '-'), '+');
-		for (const token of tokens) {
-			if (token) {
-				console.log('|', pad(token.type, typeColumnSize), '|', pad(token.token, tokenColumnSize), '|');
-			} else {
-				console.log('|', pad('-', typeColumnSize), '|', pad('-', tokenColumnSize), '|');
-			}
+		console.log('+', pad('', typeColumnSize + tokenColumnSize + 17, '-'), '+');
+		console.log('|', pad('line', 4), '|', pad('col', 4), '|', pad('type', typeColumnSize), '|', pad('token', tokenColumnSize), '|');
+		console.log('+', pad('', typeColumnSize + tokenColumnSize + 17, '-'), '+');
+		for (const {type, token, line, column} of tokens) {
+			console.log('|', pad(String(line), 4), '|', pad(String(column), 4), '|', pad(type, typeColumnSize), '|', pad(token, tokenColumnSize), '|');
 		}
-		console.log('+', pad('', typeColumnSize + tokenColumnSize + 3, '-'), '+');
+		console.log('+', pad('', typeColumnSize + tokenColumnSize + 17, '-'), '+');
 	}
 
 	processChar(char) {
@@ -207,6 +213,8 @@ class Lexer {
 
 		if (!token) {
 			token = {
+				line: '-',
+				column: '-',
 				type: '-',
 				token: char
 			};
@@ -226,6 +234,8 @@ class Lexer {
 		}
 
 		return {
+			line: this.line.index,
+			column: this.char.index,
 			type: rule.type,
 			token: token
 		};
