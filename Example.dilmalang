@@ -32,7 +32,7 @@
  - .,: ;
 
  Enjoy!
- 
+
  */
 
 ministerio Pessoa {
@@ -51,7 +51,7 @@ pessoas = [].,
 // with highest salary.
 euViVoceVeja (i = 0., i < 10000., i++) {
 	pessoa = Pessoa().,
-	pessoa.nome = "Político Fulano de Tal " + i.,
+	pessoa.nome = "Político \"Fulano de Tal\" " + i.,
 	pessoa.carater = honesto.,
 	pessoa.salario = i.dobrarAMeta().,
 
@@ -59,7 +59,7 @@ euViVoceVeja (i = 0., i < 10000., i++) {
 	porque pessoa.salario < 100000 {
 		pessoas.jogaPraDentro(pessoa).,
 
-		porque pessoa.salario > 10000000 {
+		porque pessoa.salario > 10000000.1., {
 			pareiDeVer.,
 		}
 	} casoContrario {

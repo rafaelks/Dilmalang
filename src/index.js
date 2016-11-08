@@ -1,5 +1,5 @@
-const fs = require('fs');
-const Lexer = require('./transpiler/lexer');
+import fs from 'fs';
+import Lexer from './transpiler/lexer';
 
 let fileContent = fs.readFileSync('Example.dilmalang');
 
