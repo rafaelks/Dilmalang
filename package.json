@@ -15,7 +15,8 @@
   },
   "scripts": {
     "build": "babel src -d lib",
-    "watch": "babel-watch src"
+    "watch": "babel-watch src",
+    "start": "node lib index.js"
   },
   "dependencies": {
     "pad": "^1.0.2"
