@@ -1,7 +1,8 @@
 import fs from 'fs';
 import Lexer from './transpiler/lexer';
 
-let fileContent = fs.readFileSync('Example.dilmalang');
+// let fileContent = fs.readFileSync('Example.dilmalang');
+let fileContent = fs.readFileSync('Example - Loop.dilmalang');
 
 if (!fileContent) {
 	console.error('File not found');
@@ -9,4 +10,5 @@ if (!fileContent) {
 
 fileContent = fileContent.toString();
 
-new Lexer(fileContent);
+const lexer = new Lexer(fileContent);
+lexer.printTokens();
