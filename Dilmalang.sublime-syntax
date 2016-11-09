@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Dilmalang
+file_extensions: [dilmalang]
+
+contexts:
+  main:
+    - match: \b(if|else|for|while)\b
+      scope: keyword.control.c
