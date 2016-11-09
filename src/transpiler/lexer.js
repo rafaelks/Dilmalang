@@ -171,34 +171,38 @@ class Lexer {
 			}
 		];
 
+		this.tokens = [];
+
 		while (!this.line.eof) {
-			const tokens = [];
 			while (!this.char.eof) {
 				if (this.char.current !== ' ') {
-					tokens.push(this.processChar(this.char.current));
+					this.tokens.push(this.processChar(this.char.current));
 				}
 				this.char.next();
 			}
-			this.printTokens(tokens);
 
 			this.line.next();
 		}
-
-		console.log('END');
 	}
 
-	printTokens(tokens) {
-		const typeColumnSize = 20;
-		const tokenColumnSize = 40;
-		console.log('');
-		console.log(this.line.current.original);
-		console.log('+', pad('', typeColumnSize + tokenColumnSize + 17, '-'), '+');
-		console.log('|', pad('line', 4), '|', pad('col', 4), '|', pad('type', typeColumnSize), '|', pad('token', tokenColumnSize), '|');
-		console.log('+', pad('', typeColumnSize + tokenColumnSize + 17, '-'), '+');
-		for (const {type, token, line, column} of tokens) {
-			console.log('|', pad(String(line), 4), '|', pad(String(column), 4), '|', pad(type, typeColumnSize), '|', pad(token, tokenColumnSize), '|');
+	printTokens() {
+		const typeColumnSize = 15;
+		const tokenColumnSize = 45;
+		const codeColumnSize = 72;
+		const totalColumnSize = typeColumnSize + tokenColumnSize + codeColumnSize + 20;
+		let currentLine = -1;
+		console.log('+', pad('', totalColumnSize, '-'), '+');
+		console.log('|', pad('line', 4), '|', pad('col', 4), '|', pad('type', typeColumnSize), '|', pad('token', tokenColumnSize), '|', pad('code', codeColumnSize), '|');
+
+		for (const {type, token, line, column, code} of this.tokens) {
+			if (line !== currentLine) {
+				console.log('+', pad('', totalColumnSize, '-'), '+');
+				currentLine = line;
+			}
+			console.log('|', pad(String(line), 4), '|', pad(String(column), 4), '|', pad(type, typeColumnSize), '|', pad(token, tokenColumnSize), '|', pad(code, codeColumnSize), '|');
 		}
-		console.log('+', pad('', typeColumnSize + tokenColumnSize + 17, '-'), '+');
+
+		console.log('+', pad('', totalColumnSize, '-'), '+');
 	}
 
 	processChar(char) {
@@ -234,6 +238,7 @@ class Lexer {
 		}
 
 		return {
+			code: this.line.current.original,
 			line: this.line.index,
 			column: this.char.index,
 			type: rule.type,
