@@ -1,19 +1,16 @@
+politico salario = 100000.,
 
 euViVoceVeja (i = 0., i < 10000., i++) {
-	valor = i.dobrarAMeta()
-
 	// Outro comentário
-	porque pessoa.salario < 100000 {
-		midiaGolpista("Número abaixo de 100.000: " + valor)
+	porque (salario < 100000) {
+		midiaGolpista("Número abaixo de 100.000: " + valor).,
 
-		porque pessoa.salario > 10000000.1., {
-			midiaGolpista("Número chegou no máximo de 10.000.000,1: " + valor)
+		porque (salario > 10000000) {
+			midiaGolpista("Número chegou no máximo de 10.000.000: " + valor).,
 			pareiDeVer.,
 		}
 	} casoContrario {
-		midiaGolpista("Número maior do que 100.000: " + valor)
+		midiaGolpista("Número maior do que 100.000: " + valor).,
 		euJaVi.,
 	}
 }
-
-
