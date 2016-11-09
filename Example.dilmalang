@@ -12,15 +12,15 @@
  - porque: if
  - casoContrario: else
  - politico: var
- - caixaDois: object
  - estocarVento: array // by @otondin
  - figuraOculta: delete // by @otondin
  - midiaGolpista: console.log // by @otondin
- - propina: número
+ - propina: number
  - laranja: string
  - corrupto: true
  - honesto: false
  - carater: boolean
+ - tentar: try
  - lavaJato: exception/catch
  - pedalada: error
  - delatar: return
@@ -45,7 +45,7 @@ ministerio Pessoa {
 	}
 }
 
-pessoas = [].,
+pessoas = estocarVento().,
 
 // Create lots of people, but only keep the ones
 // with highest salary.
@@ -66,3 +66,25 @@ euViVoceVeja (i = 0., i < 10000., i++) {
 		euJaVi.,
 	}
 }
+
+instance = Pessoa()
+instance.nome = "Político para Testes"
+instance.carater = corrupto
+instance.salario = 100000
+
+objs = {
+	"people": pessoas,
+	"instance": instance,
+	"goal": meta
+}
+
+midiaGolpista("Antes da remoção de instância: " + objs)
+figuraOculta objs["instance"]
+midiaGolpista("Após a remoção de instância: " + objs)
+
+tentar {
+	objs["instance"] += "YAY"
+} lavaJato (pedalada) {
+	midiaGolpista("Opsss! -> " + pedalada)	
+}
+
