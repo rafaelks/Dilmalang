@@ -43,7 +43,11 @@ class Compiler {
 			let program = object.prog;
 
 			for (let smallProgram of program) {
-				this.compile(smallProgram)
+				this.compile(smallProgram);
+				if (!/}$/.test(this.compiled)) {
+					this.append(';');
+				}
+				this.append('\n');
 			}
 
 		} else if (type === "declaration") {
@@ -92,8 +96,6 @@ class Compiler {
 
 			this.compile(object.value);
 		}
-
-		this.append(';\n');
 	}
 
 	compileLoop(object) {
@@ -118,15 +120,15 @@ class Compiler {
 		}
 
 		this.identionLevel--;
-		this.append("}\n");
+		this.append("}");
 	}
 
 	compileBreak(object) {
-		this.append("break;\n");
+		this.append("break");
 	}
 
 	compileContinue(object) {
-		this.append("continue;\n");
+		this.append("continue");
 	}
 
 	compileOperation(object) {
@@ -176,7 +178,7 @@ class Compiler {
 			this.identionLevel--;
 		}
 
-		this.append("}\n");
+		this.append("}");
 	}
 
 	compilePrint(object) {
@@ -193,7 +195,7 @@ class Compiler {
 			}
 		}
 
-		this.append(");\n");
+		this.append(")");
 	}
 }
 
