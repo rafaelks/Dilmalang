@@ -5,40 +5,93 @@ class Compiler {
 		this.compile(this.parsed);
 	}
 
+	append(string) {
+		this.compiled += string;
+	}
+
 	print() {
 		console.log("Compiled")
 		console.log(this.compiled);
 	}
 
+
+	// Compile all the code
+
 	compile(object) {
-		let type = object["type"]
+		let type = object.type;
 
-		if (type == "prog") {
-			let program = object["prog"]
+		if (type === "prog") {
+			let program = object.prog;
 
-			for (smallProgram in program) {
+			for (let smallProgram of program) {
 				this.compile(smallProgram)
 			}
 
-		} else if (type == "declaration") {
+		} else if (type === "declaration") {
 			this.compileDeclaration(object)
+
+		} else if (type === "loop") {
+			this.compileLoop(object)
+
+		} else if (type === "operation") {
+			this.compileOperation(object);
+
 		}
 
-		this.print()
+		this.print();
 	}
 
 
 	// Sub Compilers
 
 	compileDeclaration(object) {
-		let name = object["name"];
-		let value = object["value"]["value"];
+		let name = object.name;
+		let value = object.value.value;
 
-		this.compiled += "var " + name + " = " + value + ";\n";
+		this.append("var " + name + " = " + value + ";\n");
 	}
 
-	compileLoop(object) {
+// "initialization": {
+//         "type": "operation",
+//         "operation": "=",
+//         "left": {
+//           "type": "var",
+//           "name": "i"
+//         },
+//         "right": {
+//           "type": "number",
+//           "value": 0
+//         }
+//       },
 
+	compileLoop(object) {
+		let initialization = object.initialization;
+		let condition = object.condition;
+		let finalExpression = object.finalExpression;
+		let statement = object.statement;
+
+		this.append("for (");
+
+		this.compile(initialization);
+		this.compile(condition);
+		this.compile(finalExpression);
+
+		this.append(") {\n");
+
+		this.compile(statement);
+	}
+
+	compileOperation(object) {
+		let operation = object.operation;
+		let leftType = object.left.type;
+		let leftName = object.left.name;
+
+		if (object.right) {
+			let rightValue = object.right.value;
+			this.append([leftName, operation, rightValue].join(" ") + ";")
+		} else {
+			this.append([leftName, operation].join("") + ";")
+		}
 	}
 }
 
