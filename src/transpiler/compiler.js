@@ -82,8 +82,11 @@ class Compiler {
 		this.append('var ' + name);
 
 		if (object.value) {
-			let value = object.value.value;
-			this.append(' = ' + value);
+			if (object.value.type === 'string') {
+				this.append(' = "' + object.value.value + '"');
+			} else {
+				this.append(' = ' + object.value.value);
+			}
 		}
 
 		this.append(';\n');
