@@ -42,9 +42,17 @@ class Compiler {
 		} else if (type === "operation") {
 			this.compileOperation(object);
 
-		} else if (type == "condition") {
+		} else if (type === "condition") {
 			this.compileCondition(object);
 
+		} else if (type === "break") {
+			this.compileBreak(object);
+
+		} else if (type === "continue") {
+			this.compileContinue(object);
+
+		} else if (type === "print") {
+			this.compilePrint(object);
 		}
 
 		this.print();
@@ -80,16 +88,29 @@ class Compiler {
 		this.compile(statement);
 	}
 
+	compileBreak(object) {
+		this.append("break;\n");
+	}
+
+	compileContinue(object) {
+		this.append("continue;\n");
+	}
+
 	compileOperation(object) {
 		let operation = object.operation;
 		let leftType = object.left.type;
 		let leftName = object.left.name;
+		var leftValue = object.left.value;
+
+		if (leftType === "string") {
+			leftValue = "\"" + leftValue + "\""
+		}
 
 		if (object.right) {
 			let rightValue = object.right.value;
-			this.append([leftName, operation, rightValue].join(" ") + ";")
+			this.append([leftName, leftValue, operation, rightValue].join(" ") + ";")
 		} else {
-			this.append([leftName, operation].join("") + ";")
+			this.append([leftName, leftValue, operation].join("") + ";")
 		}
 	}
 
@@ -109,37 +130,19 @@ class Compiler {
 		}
 
 		this.append("}\n");
-		// "type": "condition",
-  //           "condition": {
-  //             "type": "operation",
-  //             "operation": "<",
-  //             "left": {
-  //               "type": "var",
-  //               "name": "salario"
-  //             },
-  //             "right": {
-  //               "type": "number",
-  //               "value": 100000
-  //             }
-  //           },
 	}
 
 	compilePrint(object) {
-		let initialization = object.initialization;
-		let condition = object.condition;
-		let finalExpression = object.finalExpression;
-		let statement = object.statement;
+		let values = object.values;
+		let valuesCompiled = [];
 
-		this.append("for (");
+		this.append("console.log(");
 
-		this.compile(initialization);
-		this.compile(condition);
-		this.compile(finalExpression);
+		for (let value of values) {
+			this.compile(value);
+		}
 
-		this.append(") {\n");
-
-		console.log(statement)
-		this.compile(statement);
+		this.append(");\n");
 	}
 }
 
