@@ -1,6 +1,6 @@
 politico salario = 100000.,
 
-euViVoceVeja (i = 0., i < 10000., i++) {
+euViVoceVeja (politico i = 0., i < 10000., i++) {
 	salario = salario + i.,
 
 	// Outro comentário
