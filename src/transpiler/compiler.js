@@ -106,7 +106,9 @@ class Compiler {
 		this.append(") {\n");
 		this.identionLevel--;
 
-		this.compile(statement);
+		if (statement) {
+			this.compile(statement);
+		}
 	}
 
 	compileBreak(object) {
@@ -154,12 +156,14 @@ class Compiler {
 		this.compile(condition);
 		this.identionLevel++;
 		this.append(") {\n");
-		this.compile(conditionThen);
+		if (conditionThen) {
+			this.compile(conditionThen);
 
-		if (object.else) {
-			this.append("} else {\n");
-			this.compile(conditionElse);
-			this.identionLevel--;
+			if (object.else) {
+				this.append("} else {\n");
+				this.compile(conditionElse);
+				this.identionLevel--;
+			}
 		}
 
 		this.append("}\n");
