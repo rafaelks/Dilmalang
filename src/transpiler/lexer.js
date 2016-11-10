@@ -147,26 +147,20 @@ class Lexer {
 
 		this.rules = [
 			{
-				type: 'id',
-				testInitial: (char) => {
-					return /[a-zA-Z$]/.test(char);
-				},
-				testEnd: (char) => {
-					return /[^a-zA-Z0-9-_$]/.test(char);
-				},
-				getType: (token) => {
-					if (this.ids.includes(token)) {
-						return 'id';
-					}
-					return 'var';
-				}
-			}, {
 				type: 'string',
 				testInitial: (char) => {
 					return /["']/.test(char);
 				},
 				testEnd: (char, token) => {
 					return /[^\\]["']$/.test(token);
+				}
+			}, {
+				type: 'boolean',
+				testInitial: (char) => {
+					return /[tf]/.test(char);
+				},
+				testEnd: (char, token) => {
+					return /^(true|false)$/.test(token);
 				}
 			}, {
 				type: 'number',
@@ -184,6 +178,20 @@ class Lexer {
 					}
 
 					return /[^0-9\.]/.test(char);
+				}
+			}, {
+				type: 'id',
+				testInitial: (char) => {
+					return /[a-zA-Z$]/.test(char);
+				},
+				testEnd: (char) => {
+					return /[^a-zA-Z0-9-_$]/.test(char);
+				},
+				getType: (token) => {
+					if (this.ids.includes(token)) {
+						return 'id';
+					}
+					return 'var';
 				}
 			}, {
 				type: 'operation',
@@ -224,7 +232,7 @@ class Lexer {
 		}
 	}
 
-	printTokens() {
+	print() {
 		const typeColumnSize = 15;
 		const tokenColumnSize = 45;
 		const codeColumnSize = 72;
