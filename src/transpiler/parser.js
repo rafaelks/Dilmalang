@@ -169,6 +169,10 @@ class Parser {
 				case 'boolean':
 					result.value = current.token === 'true';
 					break;
+
+				case 'var':
+					result.name = current.token;
+					break;
 			}
 
 			return result;

@@ -143,6 +143,52 @@ describe('Parser', function() {
 			}]
 		});
 	});
+
+	it('should parse a normal loop', function() {
+		const parser = new Parser('euViVoceVeja (i = 0., i < 10000., i++) {}');
+		assert.deepEqual(parser.parse(), {
+			type: 'prog',
+			prog: [{
+				type: 'loop',
+				initialization: {
+					type: 'operation',
+					operation: '=',
+					left: {
+						type: 'var',
+						name: 'i'
+					},
+					right: {
+						type: 'number',
+						value: 0
+					}
+				},
+				condition: {
+					type: 'operation',
+					operation: '<',
+					left: {
+						type: 'var',
+						name: 'i'
+					},
+					right: {
+						type: 'number',
+						value: 10000
+					}
+				},
+				finalExpression: {
+					type: 'operation',
+					operation: '++',
+					left: {
+						type: 'var',
+						name: 'i'
+					}
+				},
+				statement: {
+					type: 'prog',
+					prog: []
+				}
+			}]
+		});
+	});
 });
 
 
