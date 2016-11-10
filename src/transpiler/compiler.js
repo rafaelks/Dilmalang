@@ -65,9 +65,14 @@ class Compiler {
 
 	compileDeclaration(object) {
 		let name = object.name;
-		let value = object.value.value;
+		this.append('var ' + name);
 
-		this.append("var " + name + " = " + value + ";\n");
+		if (object.value) {
+			let value = object.value.value;
+			this.append(' = ' + value);
+		}
+
+		this.append(';\n');
 	}
 
 	compileLoop(object) {
