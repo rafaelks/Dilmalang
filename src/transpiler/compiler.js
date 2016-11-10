@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import Parser from './parser';
 import pad from 'pad';
 
@@ -11,7 +9,7 @@ class Compiler {
 
 		this.identionLevel = 0;
 		this.parsed = parsed;
-		this.compiled = "";
+		this.compiled = '';
 		this.compile(this.parsed);
 		this.compiled = this.compiled.replace(/\n$/, '');
 	}
@@ -29,9 +27,9 @@ class Compiler {
 	}
 
 	print() {
-		console.log("+--- Result in JavaScript ---+");
+		console.log('+--- Result in JavaScript ---+');
 		console.log(this.compiled);
-		console.log("+-----------  End -----------+");
+		console.log('+-----------  End -----------+');
 	}
 
 
@@ -40,7 +38,7 @@ class Compiler {
 	compile(object) {
 		let type = object.type;
 
-		if (type === "prog") {
+		if (type === 'prog') {
 			let program = object.prog;
 
 			for (let smallProgram of program) {
@@ -51,34 +49,34 @@ class Compiler {
 				this.append('\n');
 			}
 
-		} else if (type === "declaration") {
-			this.compileDeclaration(object)
+		} else if (type === 'declaration') {
+			this.compileDeclaration(object);
 
-		} else if (type === "loop") {
-			this.compileLoop(object)
+		} else if (type === 'loop') {
+			this.compileLoop(object);
 
-		} else if (type === "operation") {
+		} else if (type === 'operation') {
 			this.compileOperation(object);
 
-		} else if (type === "condition") {
+		} else if (type === 'condition') {
 			this.compileCondition(object);
 
-		} else if (type === "break") {
+		} else if (type === 'break') {
 			this.compileBreak(object);
 
-		} else if (type === "continue") {
+		} else if (type === 'continue') {
 			this.compileContinue(object);
 
-		} else if (type === "print") {
+		} else if (type === 'print') {
 			this.compilePrint(object);
 
-		} else if (type === "string") {
+		} else if (type === 'string') {
 			this.append('\'' + object.value + '\'');
 
-		} else if (type === "number") {
+		} else if (type === 'number') {
 			this.append(String(object.value));
 
-		} else if (type === "boolean") {
+		} else if (type === 'boolean') {
 			this.append(object.value ? 'true' : 'false');
 		}
 
@@ -87,10 +85,8 @@ class Compiler {
 
 
 	// Sub Compilers
-
 	compileDeclaration(object) {
-		let name = object.name;
-		this.append('var ' + name);
+		this.append('var ' + object.name);
 
 		if (object.value) {
 			this.append(' = ');
@@ -100,43 +96,34 @@ class Compiler {
 	}
 
 	compileLoop(object) {
-		let initialization = object.initialization;
-		let condition = object.condition;
-		let finalExpression = object.finalExpression;
-		let statement = object.statement;
+		this.append('for (');
 
-		this.append("for (");
+		this.compile(object.initialization);
+		this.append('; ');
+		this.compile(object.condition);
+		this.append('; ');
+		this.compile(object.finalExpression);
 
-		this.compile(initialization);
-		this.append("; ");
-		this.compile(condition);
-		this.append("; ");
-		this.compile(finalExpression);
-
-		this.append(") \{\n");
+		this.append(') \{\n');
 		this.identionLevel++;
 
-		if (statement) {
-			this.compile(statement);
+		if (object.statement) {
+			this.compile(object.statement);
 		}
 
 		this.identionLevel--;
-		this.append("}");
+		this.append('}');
 	}
 
-	compileBreak(object) {
-		this.append("break");
+	compileBreak() {
+		this.append('break');
 	}
 
-	compileContinue(object) {
-		this.append("continue");
+	compileContinue() {
+		this.append('continue');
 	}
 
 	compileOperation(object) {
-		let operation = object.operation;
-		let leftType = object.left.type;
-		var leftValue = object.left.value;
-
 		if (object.left.name) {
 			this.append(object.left.name);
 		} else {
@@ -145,7 +132,7 @@ class Compiler {
 
 		if (object.right) {
 			this.append(' ');
-			this.append(operation);
+			this.append(object.operation);
 			this.append(' ');
 
 			if (object.right.name) {
@@ -154,38 +141,32 @@ class Compiler {
 				this.compile(object.right);
 			}
 		} else {
-			this.append(operation);
+			this.append(object.operation);
 		}
 	}
 
 	compileCondition(object) {
-		let condition = object.condition;
-		let conditionThen = object.then;
-		let conditionElse = object.else;
-
-		this.append("if (");
-		this.compile(condition);
-		this.append(") \{\n");
-		if (conditionThen) {
+		this.append('if (');
+		this.compile(object.condition);
+		this.append(') \{\n');
+		if (object.then) {
 			this.identionLevel++;
-			this.compile(conditionThen);
+			this.compile(object.then);
 
 			if (object.else) {
 				this.identionLevel--;
-				this.append("} else {\n");
+				this.append('} else {\n');
 				this.identionLevel++;
-				this.compile(conditionElse);
+				this.compile(object.else);
 			}
 			this.identionLevel--;
 		}
 
-		this.append("}");
+		this.append('}');
 	}
 
 	compilePrint(object) {
-		let valuesCompiled = [];
-
-		this.append("console.log(");
+		this.append('console.log(');
 
 		if (object.values) {
 			for (let value of object.values) {
@@ -196,7 +177,7 @@ class Compiler {
 			}
 		}
 
-		this.append(")");
+		this.append(')');
 	}
 }
 
