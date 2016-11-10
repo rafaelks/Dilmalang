@@ -15,7 +15,7 @@ class Compiler {
 	}
 
 	appendSpaces() {
-		console.log(this.identionLevel);
+		// console.log(this.identionLevel);
 
 		for (var i = 0; i < this.identionLevel * 4; i++) {
 			this.compiled += " ";
@@ -69,6 +69,15 @@ class Compiler {
 
 		} else if (type === "print") {
 			this.compilePrint(object);
+
+		} else if (type === "string") {
+			this.append('"' + object.value + '"');
+
+		} else if (type === "number") {
+			this.append(String(object.value));
+
+		} else if (type === "boolean") {
+			this.append(object.value ? 'true' : 'false');
 		}
 
 		return this.compiled;
@@ -82,11 +91,9 @@ class Compiler {
 		this.append('var ' + name);
 
 		if (object.value) {
-			if (object.value.type === 'string') {
-				this.append(' = "' + object.value.value + '"');
-			} else {
-				this.append(' = ' + object.value.value);
-			}
+			this.append(' = ');
+
+			this.compile(object.value);
 		}
 
 		this.append(';\n');
@@ -174,13 +181,12 @@ class Compiler {
 	}
 
 	compilePrint(object) {
-		let values = object.values;
 		let valuesCompiled = [];
 
 		this.append("console.log(");
 
-		if (values) {
-			for (let value of values) {
+		if (object.values) {
+			for (let value of object.values) {
 				this.compile(value);
 			}
 		}
