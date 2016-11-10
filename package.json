@@ -16,9 +16,9 @@
     "mocha": "^3.1.2"
   },
   "scripts": {
-    "build": "babel src -d lib",
-    "watch": "babel-watch src",
     "start": "node lib index.js",
+    "build": "node_modules/babel-cli/bin/babel src -d lib",
+    "watch": "node_modules/babel-watch/babel-watch.js src",
     "test": "node_modules/mocha/bin/mocha --compilers js:node_modules/babel-core/register test/*",
     "test-watch": "node_modules/mocha/bin/mocha --compilers js:node_modules/babel-core/register --watch test/*"
   },
