@@ -1,5 +1,11 @@
+import Parser from './parser';
+
 class Compiler {
 	constructor(parsed) {
+		if (typeof parsed === 'string') {
+			parsed = new Parser(parsed).parse();
+		}
+
 		this.parsed = parsed;
 		this.compiled = "";
 		this.compile(this.parsed);
@@ -39,6 +45,8 @@ class Compiler {
 		}
 
 		this.print();
+
+		return this.compiled;
 	}
 
 
