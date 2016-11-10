@@ -36,6 +36,9 @@ class Compiler {
 		} else if (type === "operation") {
 			this.compileOperation(object);
 
+		} else if (type == "condition") {
+			this.compileCondition(object);
+
 		}
 
 		this.print();
@@ -51,19 +54,6 @@ class Compiler {
 		this.append("var " + name + " = " + value + ";\n");
 	}
 
-// "initialization": {
-//         "type": "operation",
-//         "operation": "=",
-//         "left": {
-//           "type": "var",
-//           "name": "i"
-//         },
-//         "right": {
-//           "type": "number",
-//           "value": 0
-//         }
-//       },
-
 	compileLoop(object) {
 		let initialization = object.initialization;
 		let condition = object.condition;
@@ -78,6 +68,7 @@ class Compiler {
 
 		this.append(") {\n");
 
+		console.log(statement)
 		this.compile(statement);
 	}
 
@@ -92,6 +83,32 @@ class Compiler {
 		} else {
 			this.append([leftName, operation].join("") + ";")
 		}
+	}
+
+	compileCondition(object) {
+		let condition = object.condition;
+		let conditionThen = object.then;
+		let conditionElse = object.else;
+
+		this.append("if (");
+		this.compile(condition);
+		this.append(") {\n");
+		this.compile(conditionThen);
+		this.compile(conditionElse);
+		this.append("}\n");
+		// "type": "condition",
+  //           "condition": {
+  //             "type": "operation",
+  //             "operation": "<",
+  //             "left": {
+  //               "type": "var",
+  //               "name": "salario"
+  //             },
+  //             "right": {
+  //               "type": "number",
+  //               "value": 100000
+  //             }
+  //           },
 	}
 }
 
