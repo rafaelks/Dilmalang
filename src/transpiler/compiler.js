@@ -107,8 +107,15 @@ class Compiler {
 		}
 
 		if (object.right) {
-			let rightValue = object.right.value;
-			this.append([leftName, leftValue, operation, rightValue].join(" ") + ";")
+			let rightType = object.right.type;
+			let rightName = object.right.name;
+			var rightValue = object.right.value;
+
+			if (rightType === "string") {
+				rightValue = "\"" + rightValue + "\""
+			}
+
+			this.append([leftName, leftValue, operation, rightValue, rightName].join(" ") + ";")
 		} else {
 			this.append([leftName, leftValue, operation].join("") + ";")
 		}
