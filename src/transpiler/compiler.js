@@ -134,25 +134,28 @@ class Compiler {
 	compileOperation(object) {
 		let operation = object.operation;
 		let leftType = object.left.type;
-		let leftName = object.left.name;
 		var leftValue = object.left.value;
 
-		if (leftType === "string") {
-			leftValue = "\"" + leftValue + "\""
+		if (object.left.name) {
+			this.append(object.left.name);
+			this.append(' ');
 		}
 
-		if (object.right) {
-			let rightType = object.right.type;
-			let rightName = object.right.name;
-			var rightValue = object.right.value;
+		this.compile(object.left);
 
-			if (rightType === "string") {
-				rightValue = "\"" + rightValue + "\""
+		if (object.right) {
+			this.append(' ');
+			this.append(operation);
+			this.append(' ');
+
+			if (object.right.name) {
+				this.append(object.right.name);
+				this.append(' ');
 			}
 
-			this.append([leftName, leftValue, operation, rightValue, rightName].join(" "))
+			this.compile(object.right);
 		} else {
-			this.append([leftName, leftValue, operation].join(""))
+			this.append(operation);
 		}
 	}
 
