@@ -17,6 +17,7 @@ call = id(values)
 */
 
 import pad from 'pad';
+import Lexer from './lexer';
 
 class LexerControl {
 	constructor(lexer) {
@@ -38,11 +39,17 @@ class LexerControl {
 
 class Parser {
 	constructor(lexer) {
-		this.lexer = new LexerControl(lexer);
+		if (typeof lexer === 'string') {
+			this.lexer = new Lexer(lexer);
+		} else {
+			this.lexer = lexer;
+		}
 
-		this.program = this.parse_prog();
+		this.lexerControl = new LexerControl(this.lexer);
+	}
 
-		this.print();
+	parse() {
+		return this.program = this.parse_prog();
 	}
 
 	print() {
@@ -50,15 +57,15 @@ class Parser {
 	}
 
 	get current() {
-		return this.lexer.current;
+		return this.lexerControl.current;
 	}
 
 	get eof() {
-		return this.lexer.eof;
+		return this.lexerControl.eof;
 	}
 
 	next() {
-		return this.lexer.next();
+		return this.lexerControl.next();
 	}
 
 	unexpected(token) {
@@ -139,13 +146,31 @@ class Parser {
 	}
 
 	parse_value() {
-		const token = this.current.token;
-		if (this.expectType(['number', 'var', 'string'])) {
+		const current = this.current;
+		if (this.expectType(['number', 'boolean', 'string', 'var'])) {
 			this.next();
-			return token;
+			const result = {
+				type: current.type
+			};
+
+			switch (current.type) {
+				case 'number':
+					result.value = parseFloat(current.token);
+					break;
+
+				case 'string':
+					result.value = current.token.replace(/^['"]|['"]$/g, '');
+					break;
+
+				case 'boolean':
+					result.value = current.token === 'true';
+					break;
+			}
+
+			return result;
 		}
 
-		this.unexpected(token);
+		this.unexpected(current.token);
 	}
 
 	parse_expression() {

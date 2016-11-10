@@ -12,6 +12,8 @@ if (!fileContent) {
 fileContent = fileContent.toString();
 
 const lexer = new Lexer(fileContent);
-lexer.printTokens();
+lexer.print();
 
-new Parser(lexer);
+const parser = new Parser(lexer);
+parser.parse();
+parser.print();
