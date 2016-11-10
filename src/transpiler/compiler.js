@@ -109,16 +109,19 @@ class Compiler {
 		this.identionLevel++;
 
 		this.compile(initialization);
+		this.append("; ");
 		this.compile(condition);
-		this.append(";");
+		this.append("; ");
 		this.compile(finalExpression);
 
-		this.append(") {\n");
+		this.append(") \{\n");
 		this.identionLevel--;
 
 		if (statement) {
 			this.compile(statement);
 		}
+
+		this.append("}\n");
 	}
 
 	compileBreak(object) {
@@ -138,10 +141,9 @@ class Compiler {
 
 		if (object.left.name) {
 			this.append(object.left.name);
-			this.append(' ');
+		} else {
+			this.compile(object.left);
 		}
-
-		this.compile(object.left);
 
 		if (object.right) {
 			this.append(' ');
@@ -150,10 +152,9 @@ class Compiler {
 
 			if (object.right.name) {
 				this.append(object.right.name);
-				this.append(' ');
+			} else {
+				this.compile(object.right);
 			}
-
-			this.compile(object.right);
 		} else {
 			this.append(operation);
 		}
