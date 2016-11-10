@@ -181,10 +181,6 @@ describe('Parser', function() {
 						type: 'var',
 						name: 'i'
 					}
-				},
-				statement: {
-					type: 'prog',
-					prog: []
 				}
 			}]
 		});
@@ -207,10 +203,6 @@ describe('Parser', function() {
 						type: 'number',
 						value: 100000
 					}
-				},
-				then: {
-					type: 'prog',
-					prog: []
 				}
 			}]
 		});

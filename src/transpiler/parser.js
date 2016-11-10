@@ -230,21 +230,24 @@ class Parser {
 		this.skipExpectedPontuation(')');
 		this.skipExpectedPontuation('{');
 
-		const then = this.parse_prog();
-
-		this.skipExpectedPontuation('}');
-
 		const result = {
 			type: 'condition',
-			condition,
-			then
+			condition
 		};
+
+		if (!this.isPunctuation('}')) {
+			result.then = this.parse_prog();
+		}
+
+		this.skipExpectedPontuation('}');
 
 		if (!this.eof && this.current.token === 'casoContrario') {
 			this.next();
 			this.skipExpectedPontuation('{');
 
-			result.else = this.parse_prog();
+			if (!this.isPunctuation('}')) {
+				result.else = this.parse_prog();
+			}
 
 			this.skipExpectedPontuation('}');
 		}
@@ -255,30 +258,29 @@ class Parser {
 	parse_euViVoceVeja() {
 		this.skipExpectedPontuation('(');
 
-		const initialization = this.parse_expression();
+		const result = {
+			type: 'loop',
+			initialization: this.parse_expression()
+		};
 
 		this.skipExpectedPontuation('.,');
 
-		const condition = this.parse_expression();
+		result.condition = this.parse_expression();
 
 		this.skipExpectedPontuation('.,');
 
-		const finalExpression = this.parse_expression();
+		result.finalExpression = this.parse_expression();
 
 		this.skipExpectedPontuation(')');
 		this.skipExpectedPontuation('{');
 
-		const statement = this.parse_prog();
+		if (!this.isPunctuation('}')) {
+			result.statement = this.parse_prog();
+		}
 
 		this.skipExpectedPontuation('}');
 
-		return {
-			type: 'loop',
-			initialization,
-			condition,
-			finalExpression,
-			statement
-		};
+		return result;
 	}
 
 	parse_values() {
