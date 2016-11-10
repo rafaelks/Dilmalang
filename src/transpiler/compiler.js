@@ -11,7 +11,6 @@ class Compiler {
 		this.parsed = parsed;
 		this.compiled = "";
 		this.compile(this.parsed);
-		this.print()
 	}
 
 	append(string) {

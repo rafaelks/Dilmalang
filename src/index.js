@@ -20,3 +20,4 @@ parser.parse();
 parser.print();
 
 const compiler = new Compiler(parser.program);
+compiler.print();
