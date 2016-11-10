@@ -296,11 +296,16 @@ class Parser {
 		this.skipExpectedPontuation('(');
 
 		const result = {
-			type: 'loop',
-			initialization: this.parse_expression()
+			type: 'loop'
 		};
 
-		this.skipExpectedPontuation('.,');
+		if (this.isType('id', 'politico')) {
+			this.next();
+			result.initialization = this.parse_politico();
+		} else {
+			result.initialization = this.parse_expression();
+			this.skipExpectedPontuation('.,');
+		}
 
 		result.condition = this.parse_expression();
 
