@@ -60,18 +60,18 @@ describe('Transpiler', function() {
 	});
 
 	it('should transpile expression `1 + 1`', function() {
-		compare('1 + 1', '');
+		compare('1 + 1', '1 + 1');
 	});
 
 	it('should transpile expression `1 + 4 / 2`', function() {
-		compare('1 + 4 / 2', '');
+		compare('1 + 4 / 2', '1 + 4 / 2');
 	});
 
 	it('should transpile expression `4 / 2 + 1`', function() {
-		compare('4 / 2 + 1', '');
+		compare('4 / 2 + 1', '4 / 2 + 1');
 	});
 
 	it('should transpile expression `4 / 2 + 1 * 3 - 2`', function() {
-		compare('4 / 2 + 1 * 3 - 2', '');
+		compare('4 / 2 + 1 * 3 - 2', '4 / 2 + 1 * 3 - 2');
 	});
 });
