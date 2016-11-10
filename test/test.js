@@ -225,14 +225,25 @@ describe('Parser', function() {
 						type: 'number',
 						value: 100000
 					}
+				}
+			}]
+		});
+	});
+
+	it.only('should parse expression `1 + 1`', function() {
+		const parser = new Parser('1 + 1');
+		assert.deepEqual(parser.parse(), {
+			type: 'prog',
+			prog: [{
+				type: 'operation',
+				operation: '+',
+				left: {
+					type: 'number',
+					value: 1
 				},
-				then: {
-					type: 'prog',
-					prog: []
-				},
-				else: {
-					type: 'prog',
-					prog: []
+				right: {
+					type: 'number',
+					value: 1
 				}
 			}]
 		});

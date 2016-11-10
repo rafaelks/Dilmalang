@@ -128,10 +128,22 @@ class Parser {
 	parse_prog() {
 		const prog = [];
 
-		while (!this.eof && this[`parse_${this.current.token}`]) {
-			const parser = `parse_${this.current.token}`;
+		while (!this.eof) {
+			if (this[`parse_${this.current.token}`]) {
+				const parser = `parse_${this.current.token}`;
+				this.next();
+				prog.push(this[parser]());
+				continue;
+			}
+
+			if (['number', 'boolean', 'string', 'var'].includes(this.current.type)) {
+				prog.push(this.parse_expression());
+				this.next();
+				continue;
+			}
+
+			this.unexpected(this.current.token);
 			this.next();
-			prog.push(this[parser]());
 		}
 
 		return {
@@ -183,6 +195,10 @@ class Parser {
 
 	parse_expression() {
 		let result = this.parse_value();
+
+		if (this.eof) {
+			return result;
+		}
 
 		const token = this.current.token;
 		if (this.isType('operation')) {
