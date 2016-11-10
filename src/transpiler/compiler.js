@@ -172,8 +172,10 @@ class Compiler {
 
 		this.append("console.log(");
 
-		for (let value of values) {
-			this.compile(value);
+		if (values) {
+			for (let value of values) {
+				this.compile(value);
+			}
 		}
 
 		this.append(");\n");
