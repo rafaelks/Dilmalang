@@ -12,7 +12,7 @@ describe('Parser', function() {
 		});
 	});
 
-	it.skip('should parse a declaration without value', function() {
+	it.skip('should parse a declaration with no value', function() {
 		const parser = new Parser('politico salario.,');
 		assert.deepEqual(parser.parse(), {
 			type: 'prog',
@@ -77,6 +77,69 @@ describe('Parser', function() {
 					type: 'boolean',
 					value: false
 				}
+			}]
+		});
+	});
+
+	it('should parse a print with no value', function() {
+		const parser = new Parser('midiaGolpista().,');
+		assert.deepEqual(parser.parse(), {
+			type: 'prog',
+			prog: [{
+				type: 'print'
+			}]
+		});
+	});
+
+	it('should parse a print with string', function() {
+		const parser = new Parser('midiaGolpista("Número abaixo de 100.000: ").,');
+		assert.deepEqual(parser.parse(), {
+			type: 'prog',
+			prog: [{
+				type: 'print',
+				values: [{
+					type: 'string',
+					value: 'Número abaixo de 100.000: '
+				}]
+			}]
+		});
+	});
+
+	it('should parse a print with expression', function() {
+		const parser = new Parser('midiaGolpista("Número abaixo de 100.000: " + 1000).,');
+		assert.deepEqual(parser.parse(), {
+			type: 'prog',
+			prog: [{
+				type: 'print',
+				values: [{
+					type: 'operation',
+					operation: '+',
+					left: {
+						type: 'string',
+						value: 'Número abaixo de 100.000: '
+					},
+					right: {
+						type: 'number',
+						value: 1000
+					}
+				}]
+			}]
+		});
+	});
+
+	it('should parse a print with multiple values', function() {
+		const parser = new Parser('midiaGolpista("Número abaixo de 100.000: ", 1000).,');
+		assert.deepEqual(parser.parse(), {
+			type: 'prog',
+			prog: [{
+				type: 'print',
+				values: [{
+					type: 'string',
+					value: 'Número abaixo de 100.000: '
+				}, {
+					type: 'number',
+					value: 1000
+				}]
 			}]
 		});
 	});

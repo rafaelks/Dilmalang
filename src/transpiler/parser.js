@@ -270,7 +270,13 @@ class Parser {
 	}
 
 	parse_values() {
-		return this.parse_expression();
+		let values = [this.parse_expression()];
+		if (this.isPunctuation(',')) {
+			this.next();
+			values = values.concat(this.parse_values());
+		}
+
+		return values;
 	}
 
 	parse_midiaGolpista() {
