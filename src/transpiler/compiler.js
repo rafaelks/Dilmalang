@@ -18,7 +18,7 @@ class Compiler {
 
 	indent(string) {
 		if (/\n$/.test(this.compiled)) {
-			return pad(this.identionLevel * 4, '') + string;
+			return pad(this.identionLevel, '', '	') + string;
 		}
 
 		return string;
