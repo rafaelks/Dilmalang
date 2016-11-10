@@ -4,7 +4,7 @@ A programming language that transforms to JavaScript following the words that pr
 
 # Authors
 
- - [Rafael K. Streit](http://twitter.com/rafaelks)
+ - [Rafael K. Streit](https://twitter.com/rafaelks)
  - [Rodrigo K. Nascimento](https://twitter.com/orodrigok)
 
 # Dictionary of values
