@@ -151,6 +151,10 @@ class Parser {
 				continue;
 			}
 
+			if (this.isPunctuation('}')) {
+				break;
+			}
+
 			this.unexpected(this.current.token);
 			this.next();
 		}
