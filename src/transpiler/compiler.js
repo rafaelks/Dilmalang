@@ -13,6 +13,7 @@ class Compiler {
 		this.parsed = parsed;
 		this.compiled = "";
 		this.compile(this.parsed);
+		this.compiled = this.compiled.replace(/\n$/, '');
 	}
 
 	indent(string) {
@@ -72,7 +73,7 @@ class Compiler {
 			this.compilePrint(object);
 
 		} else if (type === "string") {
-			this.append('"' + object.value + '"');
+			this.append('\'' + object.value + '\'');
 
 		} else if (type === "number") {
 			this.append(String(object.value));
