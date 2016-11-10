@@ -190,6 +190,9 @@ class Compiler {
 
 		if (object.values) {
 			for (let value of object.values) {
+				if (object.values.indexOf(value) > 0) {
+					this.append(', ');
+				}
 				this.compile(value);
 			}
 		}
