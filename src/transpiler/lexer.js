@@ -36,17 +36,6 @@ class Cleaner {
 
 		return arr;
 	}
-
-	// print() {
-	// 	console.log(this.code);
-	// }
-
-	// printWithLineNumbers() {
-	// 	const code = this.code.split('\n');
-	// 	for (let i = 0; i < code.length; i++) {
-	// 		console.log(String(i), code[i]);
-	// 	}
-	// }
 }
 
 const cleaner = new Cleaner();

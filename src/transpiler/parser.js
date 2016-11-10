@@ -1,21 +1,3 @@
-/*
--> prog
-prog = loop | if | expression | function | call | declaration
-declaration = politico attribution
-returnableProg = return prog
-value = string | number | bool | function | call | expression
-condition = == | <= | < | >= | > | !==
-attribution = var = value
-expression = value condition value | !*value | value++ | value-- | value
-if = porque (expression) { prog }
-separator = .,
-loop = euViVoceVeja (attribution separator expression separator expression) { prog }
-function = secretaria id(params) { returnableProg }
-params = (id(,\s*)?)*
-values = (value(,\s*)?)*
-call = id(values)
-*/
-
 import pad from 'pad';
 import Lexer from './lexer';
 
