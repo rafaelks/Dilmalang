@@ -115,7 +115,6 @@ class Compiler {
 		this.compile(finalExpression);
 
 		this.append(") \{\n");
-		this.identionLevel--;
 
 		if (statement) {
 			this.compile(statement);
@@ -125,13 +124,13 @@ class Compiler {
 	}
 
 	compileBreak(object) {
-		this.append("break;\n");
 		this.identionLevel--;
+		this.append("break;\n");
 	}
 
 	compileContinue(object) {
-		this.append("continue;\n");
 		this.identionLevel--;
+		this.append("continue;\n");
 	}
 
 	compileOperation(object) {
@@ -166,7 +165,6 @@ class Compiler {
 		let conditionElse = object.else;
 
 		this.append("if (");
-		this.identionLevel++;
 		this.compile(condition);
 		this.identionLevel++;
 		this.append(") {\n");
@@ -174,14 +172,14 @@ class Compiler {
 			this.compile(conditionThen);
 
 			if (object.else) {
+				this.identionLevel++;
 				this.append("} else {\n");
 				this.compile(conditionElse);
-				this.identionLevel--;
 			}
 		}
 
-		this.append("}\n");
 		this.identionLevel--;
+		this.append("}\n");
 	}
 
 	compilePrint(object) {
