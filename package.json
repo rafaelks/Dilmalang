@@ -11,12 +11,15 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-preset-es2015": "^6.18.0",
-    "babel-watch": "^2.0.3"
+    "babel-watch": "^2.0.3",
+    "mocha": "^3.1.2"
   },
   "scripts": {
     "build": "babel src -d lib",
     "watch": "babel-watch src",
-    "start": "node lib index.js"
+    "start": "node lib index.js",
+    "test": "node_modules/mocha/bin/mocha --compilers js:babel-core/register test/*",
+    "test-watch": "node_modules/mocha/bin/mocha --compilers js:babel-core/register --watch test/*"
   },
   "dependencies": {
     "pad": "^1.0.2"
