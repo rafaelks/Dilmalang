@@ -102,7 +102,12 @@ class Compiler {
 		this.compile(condition);
 		this.append(") {\n");
 		this.compile(conditionThen);
-		this.compile(conditionElse);
+
+		if (object.else) {
+			this.append("} else {\n");
+			this.compile(conditionElse);
+		}
+
 		this.append("}\n");
 		// "type": "condition",
   //           "condition": {
@@ -117,6 +122,24 @@ class Compiler {
   //               "value": 100000
   //             }
   //           },
+	}
+
+	compilePrint(object) {
+		let initialization = object.initialization;
+		let condition = object.condition;
+		let finalExpression = object.finalExpression;
+		let statement = object.statement;
+
+		this.append("for (");
+
+		this.compile(initialization);
+		this.compile(condition);
+		this.compile(finalExpression);
+
+		this.append(") {\n");
+
+		console.log(statement)
+		this.compile(statement);
 	}
 }
 
