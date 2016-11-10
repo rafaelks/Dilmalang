@@ -83,6 +83,10 @@ class CharControl {
 		return this.lexer.line.current.column;
 	}
 
+	indexAdd() {
+		this.lexer.line.current.column++;
+	}
+
 	next() {
 		this.lexer.line.current.column++;
 		this.lexer.line.current.code = this.lexer.line.current.code.substr(1);
@@ -110,6 +114,33 @@ class Lexer {
 	constructor(code) {
 		this.code = cleaner.clean(code);
 
+		this.ids = [
+			'ministerio',
+			'cc',
+			'secretaria',
+			'dobrarAMeta',
+			'porque',
+			'casoContrario',
+			'politico',
+			'estocarVento',
+			'figuraOculta',
+			'midiaGolpista',
+			'propina',
+			'laranja',
+			'corrupto',
+			'honesto',
+			'carater',
+			'tentar',
+			'lavaJato',
+			'pedalada',
+			'delatar',
+			'euViVoceVeja',
+			'euJaVi',
+			'pareiDeVer',
+			'meta',
+			'jogaPraDentro'
+		];
+
 		this.line = new LineControl(this);
 		this.char = new CharControl(this);
 		// console.log(this.code.parsed);
@@ -122,6 +153,12 @@ class Lexer {
 				},
 				testEnd: (char) => {
 					return /[^a-zA-Z0-9-_$]/.test(char);
+				},
+				getType: (token) => {
+					if (this.ids.includes(token)) {
+						return 'id';
+					}
+					return 'var';
 				}
 			}, {
 				type: 'string',
@@ -177,6 +214,8 @@ class Lexer {
 			while (!this.char.eof) {
 				if (this.char.current !== ' ') {
 					this.tokens.push(this.processChar(this.char.current));
+				} else {
+					this.char.indexAdd();
 				}
 				this.char.next();
 			}
@@ -239,12 +278,12 @@ class Lexer {
 
 		return {
 			code: this.line.current.original,
-			line: this.line.index,
-			column: this.char.index,
-			type: rule.type,
+			line: this.line.index + 1,
+			column: this.char.index - token.length + 1,
+			type: rule.getType ? rule.getType(token) : rule.type,
 			token: token
 		};
 	}
 }
 
-module.exports = Lexer;
+export default Lexer;
