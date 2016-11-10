@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Parser from './parser';
 
 class Compiler {
