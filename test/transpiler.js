@@ -4,27 +4,25 @@ import assert from 'assert';
 
 function compare(source, target) {
 	const compiler = new Compiler(source);
-	assert.equal(compiler.compile(), target);
+	compiler.compiled = compiler.compiled.replace(/\n$/, '');
+	assert.equal(compiler.compiled, target);
 }
 
 describe('Transpiler', function() {
-	// it('should transpile a empty program', function() {
-	// 	const compiler = new Compiler('');
-	// 	assert.equal(compiler.compile(), '');
-	// });
+	it('should transpile a empty program', function() {
+		compare('', '');
+	});
 
 	it('should transpile a declaration with no value', function() {
 		compare('politico salario.,', 'var salario;');
 	});
 
 	it('should transpile a declaration with int value', function() {
-		const compiler = new Compiler('politico salario = 100000.,');
-		assert.equal(compiler.compile(), 'var salario = 100000;');
+		compare('politico salario = 100000.,', 'var salario = 100000;');
 	});
 
 	it('should transpile a declaration with string value', function() {
-		const compiler = new Compiler('politico salario = "salario".,');
-		assert.equal(compiler.compile(), 'var salario = "salario";');
+		compare('politico salario = "salario"', 'var salario = "salario";');
 	});
 
 	// it('should transpile a declaration with boolean value', function() {
