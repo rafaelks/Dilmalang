@@ -37,10 +37,28 @@ This is the dictionary similar to JavaScript:
  - **.,**: ;
 
 # How to run
-```shell
-npm install
-```
+
+## Make sure you're using latest Node version
 
 ```shell
-npm start
+$ npm install nave -g
+$ nave use latest
+```
+
+## Install dependencies
+
+```shell
+$ npm install
+```
+
+## Run
+
+```shell
+$ npm start
+```
+
+## Run tests
+
+```shell
+$ npm test
 ```
