@@ -11,6 +11,7 @@ class Compiler {
 		this.parsed = parsed;
 		this.compiled = "";
 		this.compile(this.parsed);
+		this.print()
 	}
 
 	append(string) {
@@ -57,8 +58,6 @@ class Compiler {
 			this.compilePrint(object);
 		}
 
-		this.print();
-
 		return this.compiled;
 	}
 
@@ -86,7 +85,6 @@ class Compiler {
 
 		this.append(") {\n");
 
-		console.log(statement)
 		this.compile(statement);
 	}
 
