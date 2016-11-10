@@ -8,18 +8,32 @@ class Compiler {
 			parsed = new Parser(parsed).parse();
 		}
 
+		this.identionLevel = 0;
 		this.parsed = parsed;
 		this.compiled = "";
 		this.compile(this.parsed);
 	}
 
+	appendSpaces() {
+		console.log(this.identionLevel);
+
+		for (var i = 0; i < this.identionLevel * 4; i++) {
+			this.compiled += " ";
+		}
+	}
+
 	append(string) {
 		this.compiled += string;
+
+		if (string.indexOf("\n") != -1) {
+			this.appendSpaces();
+		}
 	}
 
 	print() {
-		console.log("Compiled")
+		console.log("+--- Result in JavaScript ---+");
 		console.log(this.compiled);
+		console.log("+-----------  End -----------+");
 	}
 
 
@@ -77,22 +91,27 @@ class Compiler {
 		let statement = object.statement;
 
 		this.append("for (");
+		this.identionLevel++;
 
 		this.compile(initialization);
 		this.compile(condition);
+		this.append(";");
 		this.compile(finalExpression);
 
 		this.append(") {\n");
+		this.identionLevel--;
 
 		this.compile(statement);
 	}
 
 	compileBreak(object) {
 		this.append("break;\n");
+		this.identionLevel--;
 	}
 
 	compileContinue(object) {
 		this.append("continue;\n");
+		this.identionLevel--;
 	}
 
 	compileOperation(object) {
@@ -114,9 +133,9 @@ class Compiler {
 				rightValue = "\"" + rightValue + "\""
 			}
 
-			this.append([leftName, leftValue, operation, rightValue, rightName].join(" ") + ";")
+			this.append([leftName, leftValue, operation, rightValue, rightName].join(" "))
 		} else {
-			this.append([leftName, leftValue, operation].join("") + ";")
+			this.append([leftName, leftValue, operation].join(""))
 		}
 	}
 
@@ -126,16 +145,20 @@ class Compiler {
 		let conditionElse = object.else;
 
 		this.append("if (");
+		this.identionLevel++;
 		this.compile(condition);
+		this.identionLevel++;
 		this.append(") {\n");
 		this.compile(conditionThen);
 
 		if (object.else) {
 			this.append("} else {\n");
 			this.compile(conditionElse);
+			this.identionLevel--;
 		}
 
 		this.append("}\n");
+		this.identionLevel--;
 	}
 
 	compilePrint(object) {
