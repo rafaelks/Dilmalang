@@ -48,15 +48,15 @@ describe('Transpiler', function() {
 	});
 
 	it('should transpile a empty loop', function() {
-		compare('euViVoceVeja (i = 0., i < 10000., i++) {}', 'for (i = 0; i < 10000; i++) {}');
+		compare('euViVoceVeja (i = 0., i < 10000., i++) {}', 'for (i = 0; i < 10000; i++) {\n}');
 	});
 
 	it('should transpile a empty if', function() {
-		compare('porque (salario < 100000) {}', 'if (salario < 100000) {}');
+		compare('porque (salario < 100000) {}', 'if (salario < 100000) {\n}');
 	});
 
 	it('should transpile a empty if with empty else', function() {
-		compare('porque (salario < 100000) {} casoContrario {}', 'if (salario < 100000) {} else {}');
+		compare('porque (salario < 100000) {} casoContrario {}', 'if (salario < 100000) {} else {\n}');
 	});
 
 	it('should transpile expression `1 + 1`', function() {
