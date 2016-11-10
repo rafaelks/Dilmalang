@@ -37,6 +37,15 @@ class LexerControl {
 	}
 }
 
+const PRECEDENCE = {
+	'=': 1,
+	'||': 2,
+	'&&': 3,
+	'<': 7, '>': 7, '<=': 7, '>=': 7, '==': 7, '!=': 7,
+	'+': 10, '-': 10,
+	'*': 20, '/': 20, '%': 20
+};
+
 class Parser {
 	constructor(lexer) {
 		if (typeof lexer === 'string') {
@@ -211,7 +220,15 @@ class Parser {
 			};
 
 			if (token !== '++' && token !== '--') {
-				result.right = this.parse_expression();
+				const expression = this.parse_expression();
+
+				if (expression.operation && PRECEDENCE[result.operation] > PRECEDENCE[expression.operation]) {
+					result.right = expression.left;
+					expression.left = result;
+					result = expression;
+				} else {
+					result.right = expression;
+				}
 			}
 		}
 

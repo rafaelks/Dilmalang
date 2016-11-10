@@ -248,22 +248,101 @@ describe('Parser', function() {
 			}]
 		});
 	});
+
+	it('should parse expression `1 + 4 / 2`', function() {
+		const parser = new Parser('1 + 4 / 2');
+		assert.deepEqual(parser.parse(), {
+			type: 'prog',
+			prog: [{
+				type: 'operation',
+				operation: '+',
+				left: {
+					type: 'number',
+					value: 1
+				},
+				right: {
+					type: 'operation',
+					operation: '/',
+					left: {
+						type: 'number',
+						value: 4
+					},
+					right: {
+						type: 'number',
+						value: 2
+					}
+				}
+			}]
+		});
+	});
+
+	it('should parse expression `4 / 2 + 1`', function() {
+		const parser = new Parser('4 / 2 + 1');
+		assert.deepEqual(parser.parse(), {
+			type: 'prog',
+			prog: [{
+				type: 'operation',
+				operation: '+',
+				left: {
+					type: 'operation',
+					operation: '/',
+					left: {
+						type: 'number',
+						value: 4
+					},
+					right: {
+						type: 'number',
+						value: 2
+					}
+				},
+				right: {
+					type: 'number',
+					value: 1
+				}
+			}]
+		});
+	});
+
+	it('should parse expression `4 / 2 + 1 * 3 - 2`', function() {
+		const parser = new Parser('4 / 2 + 1 * 3 - 2');
+		assert.deepEqual(parser.parse(), {
+			type: 'prog',
+			prog: [{
+				type: 'operation',
+				operation: '+',
+				left: {
+					type: 'operation',
+					operation: '/',
+					left: {
+						type: 'number',
+						value: 4
+					},
+					right: {
+						type: 'number',
+						value: 2
+					}
+				},
+				right: {
+					type: 'operation',
+					operation: '-',
+					left: {
+						type: 'operation',
+						operation: '*',
+						left: {
+							type: 'number',
+							value: 1
+						},
+						right: {
+							type: 'number',
+							value: 3
+						}
+					},
+					right: {
+						type: 'number',
+						value: 2
+					}
+				}
+			}]
+		});
+	});
 });
-
-
-// politico salario = 100000.,
-
-// euViVoceVeja (i = 0., i < 10000., i++) {
-// 	// Outro comentário
-// 	porque (salario < 100000) {
-// 		midiaGolpista("Número abaixo de 100.000: " + valor).,
-
-// 		porque (salario > 10000000) {
-// 			midiaGolpista("Número chegou no máximo de 10.000.000: " + valor).,
-// 			pareiDeVer.,
-// 		}
-// 	} casoContrario {
-// 		midiaGolpista("Número maior do que 100.000: " + valor).,
-// 		euJaVi.,
-// 	}
-// }
