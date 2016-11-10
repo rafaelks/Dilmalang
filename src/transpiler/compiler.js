@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import Parser from './parser';
+import pad from 'pad';
 
 class Compiler {
 	constructor(parsed) {
@@ -14,20 +15,16 @@ class Compiler {
 		this.compile(this.parsed);
 	}
 
-	appendSpaces() {
-		// console.log(this.identionLevel);
-
-		for (var i = 0; i < this.identionLevel * 4; i++) {
-			this.compiled += " ";
+	indent(string) {
+		if (/\n$/.test(this.compiled)) {
+			return pad(this.identionLevel * 4, '') + string;
 		}
+
+		return string;
 	}
 
 	append(string) {
-		this.compiled += string;
-
-		if (string.indexOf("\n") != -1) {
-			this.appendSpaces();
-		}
+		this.compiled += this.indent(string);
 	}
 
 	print() {
@@ -106,7 +103,6 @@ class Compiler {
 		let statement = object.statement;
 
 		this.append("for (");
-		this.identionLevel++;
 
 		this.compile(initialization);
 		this.append("; ");
@@ -114,22 +110,22 @@ class Compiler {
 		this.append("; ");
 		this.compile(finalExpression);
 
+		this.append(") \{\n");
+		this.identionLevel++;
+
 		if (statement) {
-			this.append(") \{\n");
 			this.compile(statement);
-			this.append("}\n");
-		} else {
-			this.append(") { }\n");
 		}
+
+		this.identionLevel--;
+		this.append("}\n");
 	}
 
 	compileBreak(object) {
-		this.identionLevel--;
 		this.append("break;\n");
 	}
 
 	compileContinue(object) {
-		this.identionLevel--;
 		this.append("continue;\n");
 	}
 
@@ -166,19 +162,20 @@ class Compiler {
 
 		this.append("if (");
 		this.compile(condition);
-		this.identionLevel++;
-		this.append(") {\n");
+		this.append(") \{\n");
 		if (conditionThen) {
+			this.identionLevel++;
 			this.compile(conditionThen);
 
 			if (object.else) {
-				this.identionLevel++;
+				this.identionLevel--;
 				this.append("} else {\n");
+				this.identionLevel++;
 				this.compile(conditionElse);
 			}
+			this.identionLevel--;
 		}
 
-		this.identionLevel--;
 		this.append("}\n");
 	}
 
