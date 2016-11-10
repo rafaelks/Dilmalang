@@ -114,13 +114,13 @@ class Compiler {
 		this.append("; ");
 		this.compile(finalExpression);
 
-		this.append(") \{\n");
-
 		if (statement) {
+			this.append(") \{\n");
 			this.compile(statement);
+			this.append("}\n");
+		} else {
+			this.append(") { }\n");
 		}
-
-		this.append("}\n");
 	}
 
 	compileBreak(object) {
