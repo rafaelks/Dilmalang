@@ -240,7 +240,7 @@ class Parser {
 			then
 		};
 
-		if (this.current.token === 'casoContrario') {
+		if (!this.eof && this.current.token === 'casoContrario') {
 			this.next();
 			this.skipExpectedPontuation('{');
 

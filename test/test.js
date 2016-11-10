@@ -144,7 +144,7 @@ describe('Parser', function() {
 		});
 	});
 
-	it('should parse a normal loop', function() {
+	it('should parse a empty loop', function() {
 		const parser = new Parser('euViVoceVeja (i = 0., i < 10000., i++) {}');
 		assert.deepEqual(parser.parse(), {
 			type: 'prog',
@@ -183,6 +183,62 @@ describe('Parser', function() {
 					}
 				},
 				statement: {
+					type: 'prog',
+					prog: []
+				}
+			}]
+		});
+	});
+
+	it('should parse a empty if', function() {
+		const parser = new Parser('porque (salario < 100000) {}');
+		assert.deepEqual(parser.parse(), {
+			type: 'prog',
+			prog: [{
+				type: 'condition',
+				condition: {
+					type: 'operation',
+					operation: '<',
+					left: {
+						type: 'var',
+						name: 'salario'
+					},
+					right: {
+						type: 'number',
+						value: 100000
+					}
+				},
+				then: {
+					type: 'prog',
+					prog: []
+				}
+			}]
+		});
+	});
+
+	it('should parse a empty if with empty else', function() {
+		const parser = new Parser('porque (salario < 100000) {} casoContrario {}');
+		assert.deepEqual(parser.parse(), {
+			type: 'prog',
+			prog: [{
+				type: 'condition',
+				condition: {
+					type: 'operation',
+					operation: '<',
+					left: {
+						type: 'var',
+						name: 'salario'
+					},
+					right: {
+						type: 'number',
+						value: 100000
+					}
+				},
+				then: {
+					type: 'prog',
+					prog: []
+				},
+				else: {
 					type: 'prog',
 					prog: []
 				}
