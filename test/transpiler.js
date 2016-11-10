@@ -22,7 +22,7 @@ describe('Transpiler', function() {
 	});
 
 	it('should transpile a declaration with string value', function() {
-		compare('politico salario = "salario"', 'var salario = "salario";');
+		compare('politico salario = "salario".,', 'var salario = "salario";');
 	});
 
 	it('should transpile a declaration with boolean value', function() {
