@@ -25,296 +25,53 @@ describe('Transpiler', function() {
 		compare('politico salario = "salario"', 'var salario = "salario";');
 	});
 
-	// it('should transpile a declaration with boolean value', function() {
-	// 	let parser = new Parser('politico salario = true.,');
-	// 	assert.equal(compiler.compile(), {
-	// 		type: 'prog',
-	// 		prog: [{
-	// 			type: 'declaration',
-	// 			name: 'salario',
-	// 			value: {
-	// 				type: 'boolean',
-	// 				value: true
-	// 			}
-	// 		}]
-	// 	});
+	it('should transpile a declaration with boolean value', function() {
+		compare('politico salario = true.,', 'var salario = true;');
 
-	// 	parser = new Parser('politico salario = false.,');
-	// 	assert.equal(compiler.compile(), {
-	// 		type: 'prog',
-	// 		prog: [{
-	// 			type: 'declaration',
-	// 			name: 'salario',
-	// 			value: {
-	// 				type: 'boolean',
-	// 				value: false
-	// 			}
-	// 		}]
-	// 	});
-	// });
+		compare('politico salario = false.,', 'var salario = false;');
+	});
 
-	// it('should transpile a print with no value', function() {
-	// 	const compiler = new Compiler('midiaGolpista().,');
-	// 	assert.equal(compiler.compile(), {
-	// 		type: 'prog',
-	// 		prog: [{
-	// 			type: 'print'
-	// 		}]
-	// 	});
-	// });
+	it('should transpile a print with no value', function() {
+		compare('midiaGolpista().,', 'console.log();');
+	});
 
-	// it('should transpile a print with string', function() {
-	// 	const compiler = new Compiler('midiaGolpista("Número abaixo de 100.000: ").,');
-	// 	assert.equal(compiler.compile(), {
-	// 		type: 'prog',
-	// 		prog: [{
-	// 			type: 'print',
-	// 			values: [{
-	// 				type: 'string',
-	// 				value: 'Número abaixo de 100.000: '
-	// 			}]
-	// 		}]
-	// 	});
-	// });
+	it('should transpile a print with string', function() {
+		compare('midiaGolpista("Número abaixo de 100.000: ").,', 'console.log("Número abaixo de 100.000: ");');
+	});
 
-	// it('should transpile a print with expression', function() {
-	// 	const compiler = new Compiler('midiaGolpista("Número abaixo de 100.000: " + 1000).,');
-	// 	assert.equal(compiler.compile(), {
-	// 		type: 'prog',
-	// 		prog: [{
-	// 			type: 'print',
-	// 			values: [{
-	// 				type: 'operation',
-	// 				operation: '+',
-	// 				left: {
-	// 					type: 'string',
-	// 					value: 'Número abaixo de 100.000: '
-	// 				},
-	// 				right: {
-	// 					type: 'number',
-	// 					value: 1000
-	// 				}
-	// 			}]
-	// 		}]
-	// 	});
-	// });
+	it('should transpile a print with expression', function() {
+		compare('midiaGolpista("Número abaixo de 100.000: " + 1000).,', 'console.log("Número abaixo de 100.000: " + 1000);');
+	});
 
-	// it('should transpile a print with multiple values', function() {
-	// 	const compiler = new Compiler('midiaGolpista("Número abaixo de 100.000: ", 1000).,');
-	// 	assert.equal(compiler.compile(), {
-	// 		type: 'prog',
-	// 		prog: [{
-	// 			type: 'print',
-	// 			values: [{
-	// 				type: 'string',
-	// 				value: 'Número abaixo de 100.000: '
-	// 			}, {
-	// 				type: 'number',
-	// 				value: 1000
-	// 			}]
-	// 		}]
-	// 	});
-	// });
+	it('should transpile a print with multiple values', function() {
+		compare('midiaGolpista("Número abaixo de 100.000: ", 1000).,', 'console.log("Número abaixo de 100.000: ", 1000);');
+	});
 
-	// it('should transpile a empty loop', function() {
-	// 	const compiler = new Compiler('euViVoceVeja (i = 0., i < 10000., i++) {}');
-	// 	assert.equal(compiler.compile(), {
-	// 		type: 'prog',
-	// 		prog: [{
-	// 			type: 'loop',
-	// 			initialization: {
-	// 				type: 'operation',
-	// 				operation: '=',
-	// 				left: {
-	// 					type: 'var',
-	// 					name: 'i'
-	// 				},
-	// 				right: {
-	// 					type: 'number',
-	// 					value: 0
-	// 				}
-	// 			},
-	// 			condition: {
-	// 				type: 'operation',
-	// 				operation: '<',
-	// 				left: {
-	// 					type: 'var',
-	// 					name: 'i'
-	// 				},
-	// 				right: {
-	// 					type: 'number',
-	// 					value: 10000
-	// 				}
-	// 			},
-	// 			finalExpression: {
-	// 				type: 'operation',
-	// 				operation: '++',
-	// 				left: {
-	// 					type: 'var',
-	// 					name: 'i'
-	// 				}
-	// 			}
-	// 		}]
-	// 	});
-	// });
+	it('should transpile a empty loop', function() {
+		compare('euViVoceVeja (i = 0., i < 10000., i++) {}', 'for (i = 0; i < 10000; i++) {}');
+	});
 
-	// it('should transpile a empty if', function() {
-	// 	const compiler = new Compiler('porque (salario < 100000) {}');
-	// 	assert.equal(compiler.compile(), {
-	// 		type: 'prog',
-	// 		prog: [{
-	// 			type: 'condition',
-	// 			condition: {
-	// 				type: 'operation',
-	// 				operation: '<',
-	// 				left: {
-	// 					type: 'var',
-	// 					name: 'salario'
-	// 				},
-	// 				right: {
-	// 					type: 'number',
-	// 					value: 100000
-	// 				}
-	// 			}
-	// 		}]
-	// 	});
-	// });
+	it('should transpile a empty if', function() {
+		compare('porque (salario < 100000) {}', 'if (salario < 100000) {}');
+	});
 
-	// it('should transpile a empty if with empty else', function() {
-	// 	const compiler = new Compiler('porque (salario < 100000) {} casoContrario {}');
-	// 	assert.equal(compiler.compile(), {
-	// 		type: 'prog',
-	// 		prog: [{
-	// 			type: 'condition',
-	// 			condition: {
-	// 				type: 'operation',
-	// 				operation: '<',
-	// 				left: {
-	// 					type: 'var',
-	// 					name: 'salario'
-	// 				},
-	// 				right: {
-	// 					type: 'number',
-	// 					value: 100000
-	// 				}
-	// 			}
-	// 		}]
-	// 	});
-	// });
+	it('should transpile a empty if with empty else', function() {
+		compare('porque (salario < 100000) {} casoContrario {}', 'if (salario < 100000) {} else {}');
+	});
 
-	// it('should transpile expression `1 + 1`', function() {
-	// 	const compiler = new Compiler('1 + 1');
-	// 	assert.equal(compiler.compile(), {
-	// 		type: 'prog',
-	// 		prog: [{
-	// 			type: 'operation',
-	// 			operation: '+',
-	// 			left: {
-	// 				type: 'number',
-	// 				value: 1
-	// 			},
-	// 			right: {
-	// 				type: 'number',
-	// 				value: 1
-	// 			}
-	// 		}]
-	// 	});
-	// });
+	it('should transpile expression `1 + 1`', function() {
+		compare('1 + 1', '');
+	});
 
-	// it('should transpile expression `1 + 4 / 2`', function() {
-	// 	const compiler = new Compiler('1 + 4 / 2');
-	// 	assert.equal(compiler.compile(), {
-	// 		type: 'prog',
-	// 		prog: [{
-	// 			type: 'operation',
-	// 			operation: '+',
-	// 			left: {
-	// 				type: 'number',
-	// 				value: 1
-	// 			},
-	// 			right: {
-	// 				type: 'operation',
-	// 				operation: '/',
-	// 				left: {
-	// 					type: 'number',
-	// 					value: 4
-	// 				},
-	// 				right: {
-	// 					type: 'number',
-	// 					value: 2
-	// 				}
-	// 			}
-	// 		}]
-	// 	});
-	// });
+	it('should transpile expression `1 + 4 / 2`', function() {
+		compare('1 + 4 / 2', '');
+	});
 
-	// it('should transpile expression `4 / 2 + 1`', function() {
-	// 	const compiler = new Compiler('4 / 2 + 1');
-	// 	assert.equal(compiler.compile(), {
-	// 		type: 'prog',
-	// 		prog: [{
-	// 			type: 'operation',
-	// 			operation: '+',
-	// 			left: {
-	// 				type: 'operation',
-	// 				operation: '/',
-	// 				left: {
-	// 					type: 'number',
-	// 					value: 4
-	// 				},
-	// 				right: {
-	// 					type: 'number',
-	// 					value: 2
-	// 				}
-	// 			},
-	// 			right: {
-	// 				type: 'number',
-	// 				value: 1
-	// 			}
-	// 		}]
-	// 	});
-	// });
+	it('should transpile expression `4 / 2 + 1`', function() {
+		compare('4 / 2 + 1', '');
+	});
 
-	// it('should transpile expression `4 / 2 + 1 * 3 - 2`', function() {
-	// 	const compiler = new Compiler('4 / 2 + 1 * 3 - 2');
-	// 	assert.equal(compiler.compile(), {
-	// 		type: 'prog',
-	// 		prog: [{
-	// 			type: 'operation',
-	// 			operation: '+',
-	// 			left: {
-	// 				type: 'operation',
-	// 				operation: '/',
-	// 				left: {
-	// 					type: 'number',
-	// 					value: 4
-	// 				},
-	// 				right: {
-	// 					type: 'number',
-	// 					value: 2
-	// 				}
-	// 			},
-	// 			right: {
-	// 				type: 'operation',
-	// 				operation: '-',
-	// 				left: {
-	// 					type: 'operation',
-	// 					operation: '*',
-	// 					left: {
-	// 						type: 'number',
-	// 						value: 1
-	// 					},
-	// 					right: {
-	// 						type: 'number',
-	// 						value: 3
-	// 					}
-	// 				},
-	// 				right: {
-	// 					type: 'number',
-	// 					value: 2
-	// 				}
-	// 			}
-	// 		}]
-	// 	});
-	// });
+	it('should transpile expression `4 / 2 + 1 * 3 - 2`', function() {
+		compare('4 / 2 + 1 * 3 - 2', '');
+	});
 });
