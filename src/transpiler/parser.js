@@ -117,6 +117,10 @@ class Parser {
 		}
 	}
 
+	isOperation(token) {
+		return this.isType('operation', token);
+	}
+
 	expectOperation(token) {
 		return this.expectType('operation', token);
 	}
@@ -197,17 +201,21 @@ class Parser {
 	parse_politico() {
 		const variable = this.parse_variable();
 
-		this.expectOperation('=');
-		this.next();
+		const result = {
+			type: 'declaration',
+			name: variable
+		};
 
-		const expression = this.parse_expression();
+		if (this.isOperation('=')) {
+			this.next();
+
+			const expression = this.parse_expression();
+			result.value = expression;
+		}
+
 		this.skipOptionalPontuation('.,');
 
-		return {
-			type: 'declaration',
-			name: variable,
-			value: expression
-		};
+		return result;
 	}
 
 	parse_porque() {

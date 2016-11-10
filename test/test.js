@@ -12,7 +12,7 @@ describe('Parser', function() {
 		});
 	});
 
-	it.skip('should parse a declaration with no value', function() {
+	it('should parse a declaration with no value', function() {
 		const parser = new Parser('politico salario.,');
 		assert.deepEqual(parser.parse(), {
 			type: 'prog',
